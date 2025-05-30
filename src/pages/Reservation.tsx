@@ -30,8 +30,8 @@ const Reservation = () => {
   const [selectedDate, setSelectedDate] = useState(
     searchParams.get("date") || new Date().toISOString().split('T')[0]
   );
-  const [selectedCentre, setSelectedCentre] = useState(searchParams.get("centre") || "");
-  const [selectedType, setSelectedType] = useState(searchParams.get("terrain") || "");
+  const [selectedCentre, setSelectedCentre] = useState(searchParams.get("centre") || "all");
+  const [selectedType, setSelectedType] = useState(searchParams.get("terrain") || "all");
   const [selectedField, setSelectedField] = useState<Field | null>(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null);
   const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
@@ -92,8 +92,8 @@ const Reservation = () => {
   ];
 
   const filteredFields = mockFields.filter(field => {
-    if (selectedCentre && field.centre !== selectedCentre) return false;
-    if (selectedType && field.type !== selectedType) return false;
+    if (selectedCentre !== "all" && field.centre !== selectedCentre) return false;
+    if (selectedType !== "all" && field.type !== selectedType) return false;
     return true;
   });
 
@@ -154,7 +154,7 @@ const Reservation = () => {
                 <SelectValue placeholder="Tous les centres" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Tous les centres</SelectItem>
+                <SelectItem value="all">Tous les centres</SelectItem>
                 <SelectItem value="casablanca-centre">Casablanca Centre</SelectItem>
                 <SelectItem value="casablanca-maarif">Casablanca Maârif</SelectItem>
                 <SelectItem value="rabat-agdal">Rabat Agdal</SelectItem>
@@ -169,7 +169,7 @@ const Reservation = () => {
                 <SelectValue placeholder="Tous les types" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Tous les types</SelectItem>
+                <SelectItem value="all">Tous les types</SelectItem>
                 <SelectItem value="foot5">Football à 5</SelectItem>
                 <SelectItem value="foot7">Football à 7</SelectItem>
                 <SelectItem value="foot11">Football à 11</SelectItem>
@@ -184,8 +184,8 @@ const Reservation = () => {
             <div className="text-center py-12">
               <p className="text-xl text-gray-600 mb-4">Aucun terrain trouvé pour vos critères</p>
               <Button onClick={() => {
-                setSelectedCentre("");
-                setSelectedType("");
+                setSelectedCentre("all");
+                setSelectedType("all");
               }}>
                 Réinitialiser les filtres
               </Button>

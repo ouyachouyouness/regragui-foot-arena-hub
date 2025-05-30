@@ -6,17 +6,16 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const SearchBar = () => {
-  const [centre, setCentre] = useState("");
-  const [terrain, setTerrain] = useState("");
+  const [centre, setCentre] = useState("all");
+  const [terrain, setTerrain] = useState("all");
   const [date, setDate] = useState("");
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    const searchParams = new URLSearchParams({
-      centre: centre || "",
-      terrain: terrain || "", 
-      date: date || ""
-    });
+    const searchParams = new URLSearchParams();
+    if (centre && centre !== "all") searchParams.set('centre', centre);
+    if (terrain && terrain !== "all") searchParams.set('terrain', terrain);
+    if (date) searchParams.set('date', date);
     navigate(`/reservation?${searchParams.toString()}`);
   };
 
@@ -34,6 +33,7 @@ const SearchBar = () => {
               <SelectValue placeholder="Choisir un centre" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="all">Tous les centres</SelectItem>
               <SelectItem value="casablanca-centre">Casablanca Centre</SelectItem>
               <SelectItem value="casablanca-maarif">Casablanca Maârif</SelectItem>
               <SelectItem value="rabat-agdal">Rabat Agdal</SelectItem>
@@ -51,6 +51,7 @@ const SearchBar = () => {
               <SelectValue placeholder="Terrain" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="all">Tous les types</SelectItem>
               <SelectItem value="foot5">Football à 5</SelectItem>
               <SelectItem value="foot7">Football à 7</SelectItem>
               <SelectItem value="foot11">Football à 11</SelectItem>
