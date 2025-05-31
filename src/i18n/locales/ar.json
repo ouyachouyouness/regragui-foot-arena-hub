@@ -1,0 +1,110 @@
+
+{
+  "navigation": {
+    "home": "الرئيسية",
+    "reservation": "الحجز",
+    "subscriptions": "الاشتراكات",
+    "gallery": "المعرض",
+    "contact": "التواصل",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "hello": "أهلاً"
+  },
+  "home": {
+    "hero": {
+      "title": "احجز الملعب ديالك.",
+      "subtitle": "العب بحال المحترفين.",
+      "description": "أكاديمية كرة القدم العصرية اللي كتثور التدريب فالمغرب",
+      "reserveNow": "احجز دابا",
+      "discoverSubscriptions": "اكتشف الاشتراكات"
+    },
+    "features": {
+      "title": "علاش تختار أكاديمية رقراقي؟",
+      "description": "تجربة فريدة فكرة القدم مع تجهيزات عصرية وإطار محترف",
+      "premiumFields": "ملاعب ممتازة",
+      "premiumFieldsDesc": "ملاعب بالعشب الاصطناعي من آخر جيل، إضاءة LED محترفة",
+      "proCoaching": "تأطير محترف",
+      "proCoachingDesc": "مدربين متخرجين وذوي خبرة لتطوير مهاراتك",
+      "easyBooking": "حجز سهل",
+      "easyBookingDesc": "احجز فكليكات قليلة، دبر اشتراكاتك وتابع تقدمك"
+    },
+    "stats": {
+      "activePlayers": "لاعبين نشطين",
+      "availableFields": "ملاعب متاحة",
+      "openAllTime": "مفتوح كل الأيام",
+      "satisfaction": "رضا العملاء"
+    },
+    "cta": {
+      "title": "واجد للبداية؟",
+      "description": "انضم لمجتمع رقراقي لكرة القدم وعيش شغفك بكرة القدم بطريقة مختلفة",
+      "bookField": "احجز ملعب",
+      "contactUs": "تواصل معانا"
+    }
+  },
+  "search": {
+    "centre": "المركز",
+    "fieldType": "نوع الملعب",
+    "date": "التاريخ",
+    "viewAvailability": "شوف المتاح",
+    "chooseCentre": "اختار مركز",
+    "allCentres": "كاع المراكز",
+    "allTypes": "كاع الأنواع",
+    "fieldTypes": {
+      "foot5": "كرة القدم خماسي",
+      "foot7": "كرة القدم سباعي",
+      "foot11": "كرة القدم إحداعشر"
+    },
+    "centres": {
+      "casablancaCentre": "الدار البيضاء الوسط",
+      "casablancaMaarif": "الدار البيضاء المعاريف",
+      "rabatAgdal": "الرباط أكدال",
+      "marrakechGueliz": "مراكش جيليز"
+    }
+  },
+  "reservation": {
+    "title": "حجز الملاعب",
+    "description": "لقا واحجز الملعب المثالي للماتش ديالك",
+    "noFieldsFound": "ما لقيناش ملاعب للمعايير ديالك",
+    "resetFilters": "إعادة تعيين الفلاتر",
+    "availableSlots": "الأوقات المتاحة",
+    "modernField": "ملعب عصري بالعشب الاصطناعي، إضاءة LED محترفة"
+  },
+  "subscriptions": {
+    "title": "الاشتراكات ديالنا",
+    "description": "اختار الاشتراك اللي يناسب احتياجاتك ووفر فالحجوزات ديالك",
+    "chooseSubscription": "اختار هاذ الاشتراك",
+    "processing": "كيتم المعالجة...",
+    "faq": "أسئلة متكررة",
+    "needHelp": "محتاج مساعدة فالاختيار؟",
+    "helpDescription": "الفريق ديالنا هنا باش ينصحك بالاشتراك اللي يناسبك أكثر"
+  },
+  "gallery": {
+    "title": "المعرض",
+    "description": "اكتشف التجهيزات ديالنا، البطولات والجو الفريد ديال أكاديمية رقراقي لكرة القدم",
+    "followInstagram": "تابعونا على إنستغرام",
+    "instagramDescription": "لقاو كاع الأخبار، الصور والفيديوهات فالوقت الحقيقي",
+    "categories": {
+      "all": "شوف الكل",
+      "fields": "الملاعب",
+      "tournaments": "البطولات",
+      "training": "التدريبات",
+      "facilities": "التجهيزات"
+    },
+    "stats": {
+      "photosShared": "صور مشاركة",
+      "tournamentsOrganized": "بطولات منظمة",
+      "matchesPlayed": "مباريات ملعوبة",
+      "instagramFollowers": "متابعين إنستغرام"
+    }
+  },
+  "footer": {
+    "description": "أكاديمية كرة القدم العصرية اللي كتثور التدريب فالمغرب. احجز الملاعب ديالك، طور المهارات ديالك، عيش الشغف ديالك.",
+    "quickLinks": "روابط سريعة",
+    "contact": "التواصل",
+    "address": "الدار البيضاء، المغرب",
+    "phone": "+212 6 12 34 56 78",
+    "email": "contact@regragui-football.ma",
+    "hours": "الاثنين-الأحد: 06ص-24م",
+    "copyright": "جميع الحقوق محفوظة."
+  }
+}

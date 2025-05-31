@@ -1,0 +1,110 @@
+
+{
+  "navigation": {
+    "home": "Accueil",
+    "reservation": "Réservation",
+    "subscriptions": "Abonnements",
+    "gallery": "Galerie",
+    "contact": "Contact",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "hello": "Bonjour"
+  },
+  "home": {
+    "hero": {
+      "title": "Réserve ton terrain.",
+      "subtitle": "Joue comme un pro.",
+      "description": "L'académie de football moderne qui révolutionne l'entraînement au Maroc",
+      "reserveNow": "Réserver maintenant",
+      "discoverSubscriptions": "Découvrir les abonnements"
+    },
+    "features": {
+      "title": "Pourquoi choisir Regragui Football ?",
+      "description": "Une expérience de football unique avec des installations modernes et un encadrement professionnel",
+      "premiumFields": "Terrains Premium",
+      "premiumFieldsDesc": "Terrains en gazon synthétique de dernière génération, éclairage LED professionnel",
+      "proCoaching": "Encadrement Pro",
+      "proCoachingDesc": "Entraîneurs diplômés et expérimentés pour développer vos compétences",
+      "easyBooking": "Réservation Simple",
+      "easyBookingDesc": "Réservez en quelques clics, gérez vos abonnements et suivez vos progrès"
+    },
+    "stats": {
+      "activePlayers": "Joueurs actifs",
+      "availableFields": "Terrains disponibles",
+      "openAllTime": "Ouvert tous les jours",
+      "satisfaction": "Satisfaction client"
+    },
+    "cta": {
+      "title": "Prêt à commencer ?",
+      "description": "Rejoignez la communauté Regragui Football et vivez votre passion du football autrement",
+      "bookField": "Réserver un terrain",
+      "contactUs": "Nous contacter"
+    }
+  },
+  "search": {
+    "centre": "Centre",
+    "fieldType": "Type de terrain",
+    "date": "Date",
+    "viewAvailability": "Voir les disponibilités",
+    "chooseCentre": "Choisir un centre",
+    "allCentres": "Tous les centres",
+    "allTypes": "Tous les types",
+    "fieldTypes": {
+      "foot5": "Football à 5",
+      "foot7": "Football à 7",
+      "foot11": "Football à 11"
+    },
+    "centres": {
+      "casablancaCentre": "Casablanca Centre",
+      "casablancaMaarif": "Casablanca Maârif",
+      "rabatAgdal": "Rabat Agdal",
+      "marrakechGueliz": "Marrakech Guéliz"
+    }
+  },
+  "reservation": {
+    "title": "Réservation de terrains",
+    "description": "Trouvez et réservez le terrain parfait pour votre match",
+    "noFieldsFound": "Aucun terrain trouvé pour vos critères",
+    "resetFilters": "Réinitialiser les filtres",
+    "availableSlots": "Créneaux disponibles",
+    "modernField": "Terrain moderne avec gazon synthétique, éclairage LED professionnel"
+  },
+  "subscriptions": {
+    "title": "Nos Abonnements",
+    "description": "Choisissez l'abonnement qui correspond à vos besoins et économisez sur vos réservations",
+    "chooseSubscription": "Choisir cet abonnement",
+    "processing": "Traitement...",
+    "faq": "Questions Fréquentes",
+    "needHelp": "Besoin d'aide pour choisir ?",
+    "helpDescription": "Notre équipe est là pour vous conseiller l'abonnement qui vous convient le mieux"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "description": "Découvrez nos installations, nos tournois et l'ambiance unique de Regragui Football Academy",
+    "followInstagram": "Suivez-nous sur Instagram",
+    "instagramDescription": "Retrouvez toutes nos actualités, photos et vidéos en temps réel",
+    "categories": {
+      "all": "Tout voir",
+      "fields": "Terrains",
+      "tournaments": "Tournois",
+      "training": "Entraînements",
+      "facilities": "Installations"
+    },
+    "stats": {
+      "photosShared": "Photos partagées",
+      "tournamentsOrganized": "Tournois organisés",
+      "matchesPlayed": "Matchs joués",
+      "instagramFollowers": "Followers Instagram"
+    }
+  },
+  "footer": {
+    "description": "L'académie de football moderne qui révolutionne l'entraînement au Maroc. Réservez vos terrains, développez vos compétences, vivez votre passion.",
+    "quickLinks": "Liens rapides",
+    "contact": "Contact",
+    "address": "Casablanca, Maroc",
+    "phone": "+212 6 12 34 56 78",
+    "email": "contact@regragui-football.ma",
+    "hours": "Lun-Dim: 06h-24h",
+    "copyright": "Tous droits réservés."
+  }
+}

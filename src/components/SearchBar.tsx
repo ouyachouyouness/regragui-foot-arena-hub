@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,6 +11,7 @@ const SearchBar = () => {
   const [terrain, setTerrain] = useState("all");
   const [date, setDate] = useState("");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSearch = () => {
     const searchParams = new URLSearchParams();
@@ -22,61 +24,65 @@ const SearchBar = () => {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="bg-white rounded-lg p-6 shadow-xl max-w-4xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+    <div className="academy-card p-6 max-w-4xl mx-auto relative overflow-hidden">
+      {/* Soccer ball pattern background */}
+      <div className="absolute inset-0 soccer-ball"></div>
+      
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Centre
+          <label className="block text-sm font-medium text-blue-900 mb-2">
+            {t("search.centre")}
           </label>
           <Select value={centre} onValueChange={setCentre}>
-            <SelectTrigger>
-              <SelectValue placeholder="Choisir un centre" />
+            <SelectTrigger className="border-blue-200 focus:border-blue-500">
+              <SelectValue placeholder={t("search.chooseCentre")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tous les centres</SelectItem>
-              <SelectItem value="casablanca-centre">Casablanca Centre</SelectItem>
-              <SelectItem value="casablanca-maarif">Casablanca Maârif</SelectItem>
-              <SelectItem value="rabat-agdal">Rabat Agdal</SelectItem>
-              <SelectItem value="marrakech-gueliz">Marrakech Guéliz</SelectItem>
+              <SelectItem value="all">{t("search.allCentres")}</SelectItem>
+              <SelectItem value="casablanca-centre">{t("search.centres.casablancaCentre")}</SelectItem>
+              <SelectItem value="casablanca-maarif">{t("search.centres.casablancaMaarif")}</SelectItem>
+              <SelectItem value="rabat-agdal">{t("search.centres.rabatAgdal")}</SelectItem>
+              <SelectItem value="marrakech-gueliz">{t("search.centres.marrakechGueliz")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Type de terrain
+          <label className="block text-sm font-medium text-blue-900 mb-2">
+            {t("search.fieldType")}
           </label>
           <Select value={terrain} onValueChange={setTerrain}>
-            <SelectTrigger>
-              <SelectValue placeholder="Terrain" />
+            <SelectTrigger className="border-blue-200 focus:border-blue-500">
+              <SelectValue placeholder={t("search.fieldType")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tous les types</SelectItem>
-              <SelectItem value="foot5">Football à 5</SelectItem>
-              <SelectItem value="foot7">Football à 7</SelectItem>
-              <SelectItem value="foot11">Football à 11</SelectItem>
+              <SelectItem value="all">{t("search.allTypes")}</SelectItem>
+              <SelectItem value="foot5">{t("search.fieldTypes.foot5")}</SelectItem>
+              <SelectItem value="foot7">{t("search.fieldTypes.foot7")}</SelectItem>
+              <SelectItem value="foot11">{t("search.fieldTypes.foot11")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Date
+          <label className="block text-sm font-medium text-blue-900 mb-2">
+            {t("search.date")}
           </label>
           <Input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             min={today}
-            className="w-full"
+            className="w-full border-blue-200 focus:border-blue-500"
           />
         </div>
 
         <Button 
           onClick={handleSearch}
-          className="bg-green-600 hover:bg-green-700 h-10 font-semibold"
+          className="academy-button h-10 relative overflow-hidden group"
         >
-          Voir les disponibilités
+          <span className="relative z-10">{t("search.viewAvailability")}</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </Button>
       </div>
     </div>
