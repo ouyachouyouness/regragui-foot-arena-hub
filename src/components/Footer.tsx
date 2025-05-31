@@ -1,83 +1,185 @@
-
-import { Link } from "react-router-dom";
+import { Clock, ExternalLink, Instagram, Link, Mail, MapPin, Phone } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+// Footer Component
 const Footer = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+
+  const quickLinks = [
+    { path: "/reservation", label: t("navigation.reservation") || "Réservation", icon: "⚽" },
+    { path: "/abonnements", label: t("navigation.subscriptions") || "Abonnements", icon: "💎" },
+    { path: "/galerie", label: t("navigation.gallery") || "Galerie", icon: "📸" },
+    { path: "/contact", label: t("navigation.contact") || "Contact", icon: "📞" },
+  ];
+
+  const socialLinks = [
+    {
+      name: "Instagram",
+      url: "https://www.instagram.com/regragui_foot/",
+      icon: <Instagram className="w-5 h-5" />,
+      color: "hover:text-pink-400"
+    },
+    {
+      name: "Facebook",
+      url: "#",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      ),
+      color: "hover:text-blue-400"
+    },
+    {
+      name: "Twitter",
+      url: "#",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+        </svg>
+      ),
+      color: "hover:text-blue-400"
+    }
+  ];
+
+  const AnimatedLogo = () => (
+    <div className="flex items-center space-x-3 rtl:space-x-reverse mb-6 group">
+      <div className="relative">
+        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center p-2 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+          <img 
+            src="/lovable-uploads/logo.png" 
+            alt="Regragui Football Academy" 
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="absolute -inset-1 bg-gradient-to-r from-[#FFCC00] to-[#FFD700] rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur"></div>
+      </div>
+      <div className="flex flex-col">
+        <span className="text-2xl font-bold leading-tight text-white group-hover:text-[#FFCC00] transition-colors">
+          Regragui Football Academy
+        </span>
+        <span className="text-sm text-blue-200 leading-tight font-medium">
+          {isArabic ? "أكاديمية رقراقي لكرة القدم" : "Excellence • Passion • Performance"}
+        </span>
+      </div>
+    </div>
+  );
 
   return (
-    <footer className="academy-gradient text-white py-12 mt-16 relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 soccer-ball"></div>
+    <footer 
+      className="bg-gradient-to-b from-[#0033A1] via-[#001a5c] to-[#000a2e] text-white py-16 mt-16 relative overflow-hidden"
+      dir={isArabic ? 'rtl' : 'ltr'}
+    >
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-32 h-32 text-white/5 animate-pulse">⚽</div>
+        <div className="absolute bottom-20 right-20 w-40 h-40 text-[#FFCC00]/10 animate-bounce">🏆</div>
+        <div className="absolute top-1/2 left-1/4 w-24 h-24 text-white/5 animate-spin slow">⭐</div>
+        
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0033A1]/20 to-transparent"></div>
+      </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
           {/* Logo & Description */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-3 rtl:space-x-reverse mb-4">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-1">
-                <img 
-                  src="/lovable-uploads/6cd8582e-05fb-4fa1-966c-c8ae4e53368e.png" 
-                  alt="Regragui Football Academy" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-bold leading-tight">Regragui Football Academy</span>
-              </div>
-            </div>
-            <p className="text-blue-200 mb-4 max-w-md">
-              {t("footer.description")}
+          <div className="lg:col-span-2">
+            <AnimatedLogo />
+            <p className="text-blue-100 mb-6 max-w-md leading-relaxed">
+              {t("footer.description") || "L'académie de football moderne qui révolutionne l'entraînement au Maroc. Réservez vos terrains, développez vos compétences, vivez votre passion."}
             </p>
-            <div className="flex space-x-4 rtl:space-x-reverse">
-              <a href="https://www.instagram.com/regragui_foot/" target="_blank" rel="noopener noreferrer" 
-                 className="text-blue-200 hover:text-yellow-400 transition-colors p-2 rounded-full hover:bg-white/10">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-              </a>
-              <a href="#" className="text-blue-200 hover:text-yellow-400 transition-colors p-2 rounded-full hover:bg-white/10">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                </svg>
-              </a>
-              <a href="#" className="text-blue-200 hover:text-yellow-400 transition-colors p-2 rounded-full hover:bg-white/10">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                </svg>
-              </a>
+            
+            {/* Social Media */}
+            <div className="mb-6">
+              <p className="text-[#FFCC00] font-semibold mb-3">
+                {isArabic ? "تابعونا لتبقوا على اطلاع ⚽" : "Suivez-nous pour ne rien rater ⚽"}
+              </p>
+              <div className="flex space-x-4 rtl:space-x-reverse">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target={social.url.startsWith('http') ? "_blank" : undefined}
+                    rel={social.url.startsWith('http') ? "noopener noreferrer" : undefined}
+                    className={`
+                      p-3 bg-white/10 rounded-full transition-all duration-300 hover:scale-110 hover:bg-white/20
+                      ${social.color}
+                    `}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-yellow-400">{t("footer.quickLinks")}</h3>
-            <ul className="space-y-2">
-              <li><Link to="/reservation" className="text-blue-200 hover:text-yellow-400 transition-colors">{t("navigation.reservation")}</Link></li>
-              <li><Link to="/abonnements" className="text-blue-200 hover:text-yellow-400 transition-colors">{t("navigation.subscriptions")}</Link></li>
-              <li><Link to="/galerie" className="text-blue-200 hover:text-yellow-400 transition-colors">{t("navigation.gallery")}</Link></li>
-              <li><Link to="/contact" className="text-blue-200 hover:text-yellow-400 transition-colors">{t("navigation.contact")}</Link></li>
+            <h3 className="text-xl font-bold mb-6 text-[#FFCC00] flex items-center gap-2">
+              <span className="text-2xl">🔗</span>
+              {t("footer.quickLinks") || "Liens rapides"}
+            </h3>
+            <ul className="space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.path}>
+                  <Link 
+                    to={link.path} 
+                    className="flex items-center gap-3 text-blue-100 hover:text-[#FFCC00] transition-all duration-300 hover:translate-x-2 rtl:hover:-translate-x-2 group"
+                  >
+                    <span className="text-lg group-hover:scale-110 transition-transform">{link.icon}</span>
+                    {link.label}
+                    <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-yellow-400">{t("footer.contact")}</h3>
-            <div className="space-y-2 text-blue-200">
-              <p>📍 {t("footer.address")}</p>
-              <p>📞 {t("footer.phone")}</p>
-              <p>✉️ {t("footer.email")}</p>
-              <p>🕒 {t("footer.hours")}</p>
+            <h3 className="text-xl font-bold mb-6 text-[#FFCC00] flex items-center gap-2">
+              <span className="text-2xl">📞</span>
+              {t("footer.contact") || "Contact"}
+            </h3>
+            <div className="space-y-4 text-blue-100">
+              <div className="flex items-center gap-3 hover:text-[#FFCC00] transition-colors">
+                <MapPin className="w-5 h-5 text-[#FFCC00]" />
+                <span>{t("footer.address") || "Errachidia, Maroc"}</span>
+              </div>
+              <div className="flex items-center gap-3 hover:text-[#FFCC00] transition-colors">
+                <Phone className="w-5 h-5 text-[#FFCC00]" />
+                <a href="tel:+212612345678">{t("footer.phone") || "+212 6 12 34 56 78"}</a>
+              </div>
+              <div className="flex items-center gap-3 hover:text-[#FFCC00] transition-colors">
+                <Mail className="w-5 h-5 text-[#FFCC00]" />
+                <a href="mailto:contact@regragui-football.ma">
+                  {t("footer.email") || "contact@regragui-football.ma"}
+                </a>
+              </div>
+              <div className="flex items-center gap-3 hover:text-[#FFCC00] transition-colors">
+                <Clock className="w-5 h-5 text-[#FFCC00]" />
+                <span>{t("footer.hours") || "Lun-Dim: 06h-24h"}</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-blue-800 pt-8 mt-8 text-center text-blue-200">
-          <p>&copy; 2024 Regragui Football Academy. {t("footer.copyright")}</p>
+        {/* Bottom Section */}
+        <div className="border-t border-blue-800/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-blue-200 text-center md:text-left">
+            &copy; 2024 Regragui Football Academy. {t("footer.copyright") || "Tous droits réservés."}
+          </p>
+          
+          <div className="flex items-center gap-4 text-sm text-blue-300">
+            <span>{isArabic ? "صُنع بـ" : "Fait avec"}</span>
+            <span className="text-red-400 text-lg animate-pulse">❤️</span>
+            <span>{isArabic ? "في المغرب" : "au Maroc"}</span>
+          </div>
         </div>
       </div>
     </footer>
   );
 };
 
-export default Footer;
+// Export both components
+export default Footer ;

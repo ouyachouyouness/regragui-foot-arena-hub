@@ -31,7 +31,7 @@ const Header = () => {
             <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-1">
                 <img 
-                  src="/lovable-uploads/6cd8582e-05fb-4fa1-966c-c8ae4e53368e.png" 
+                  src="/lovable-uploads/logo.png" 
                   alt="Regragui Football Academy" 
                   className="w-full h-full object-contain"
                 />
