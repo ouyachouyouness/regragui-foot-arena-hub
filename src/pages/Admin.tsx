@@ -1,14 +1,17 @@
-// src/pages/Admin.tsx
+// src/pages/Admin.tsx - Version mise à jour avec stats weeklySlots
+
 import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
     Settings,
     Database,
     Calendar,
-    Trophy
+    Trophy,
+    Clock
 } from 'lucide-react';
 import {
-    getStats
+    getStats,
+    getStatsWithWeeklySlots
 } from '@/firebase/admin.service.ts';
 import ScheduleCalendar from '@/components/admin/ScheduleCalendar';
 import DevTools from '@/components/admin/DevTools';
@@ -16,13 +19,13 @@ import FieldsManagement from '@/components/admin/FieldsManagement';
 import ReservationsManagement from "@/components/admin/ReservationsManagement.tsx";
 
 const Admin = () => {
-    const [importStats, setImportStats] = useState({ fields: 0, slots: 0 });
-    const [stats, setStats] = useState({ totalFields: 0, totalSlots: 0, availableSlots: 0 });
+    const [importStats, setImportStats] = useState({ fields: 0, slots: 0, weeklySlots: 0 });
+    const [stats, setStats] = useState({ totalFields: 0, totalSlots: 0, totalWeeklySlots: 0, availableSlots: 0 });
 
     // Fetch statistics
     const handleFetchStats = async () => {
         try {
-            const statsData = await getStats();
+            const statsData = await getStatsWithWeeklySlots();
             setStats(statsData);
         } catch (error) {
             console.error('Error fetching stats:', error);
@@ -68,8 +71,8 @@ const Admin = () => {
                     </div>
                 </div>
 
-                {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Stats Cards - Mise à jour avec 4 cartes */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <PremiumCard className="p-6 bg-gradient-to-r from-[#0033A1] to-[#3366CC] text-white">
                         <div className="flex items-center justify-between">
                             <div>
@@ -92,6 +95,18 @@ const Admin = () => {
                         </div>
                     </PremiumCard>
 
+                    {/* NOUVELLE CARTE pour weeklySlots */}
+                    <PremiumCard className="p-6 bg-gradient-to-r from-purple-500 to-purple-600 text-white">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-purple-100 font-medium">Semaines importées</p>
+                                <p className="text-3xl font-bold">{importStats.weeklySlots}</p>
+                                <p className="text-xs text-purple-200 mt-1">Total DB: {stats.totalWeeklySlots}</p>
+                            </div>
+                            <Clock className="w-12 h-12 text-purple-200" />
+                        </div>
+                    </PremiumCard>
+
                     <PremiumCard className="p-6 bg-gradient-to-r from-green-500 to-green-600 text-white">
                         <div className="flex items-center justify-between">
                             <div>
@@ -108,7 +123,7 @@ const Admin = () => {
             {/* Main Content */}
             <PremiumCard className="p-8">
                 <Tabs defaultValue="dev" className="space-y-8">
-                    <TabsList className="grid w-full grid-cols-3 bg-gray-100 p-1 rounded-lg h-auto">
+                    <TabsList className="grid w-full grid-cols-4 bg-gray-100 p-1 rounded-lg h-auto">
                         <TabsTrigger
                             value="dev"
                             className="data-[state=active]:bg-[#0033A1] data-[state=active]:text-white font-semibold text-sm py-2 px-4 rounded-md transition-all duration-300 whitespace-nowrap"

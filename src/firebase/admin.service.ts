@@ -21,6 +21,32 @@ export interface Slot {
     date?: string;
 }
 
+
+// Nouvelle interface pour weeklySlots
+export interface WeeklySlot {
+    time: string;
+    available: boolean;
+    price: number;
+}
+
+export interface WeeklySlots {
+    fieldId: string;
+    week: string; // Format: "2025-W19"
+    slots: {
+        lundi: WeeklySlot[];
+        mardi: WeeklySlot[];
+        mercredi: WeeklySlot[];
+        jeudi: WeeklySlot[];
+        vendredi: WeeklySlot[];
+        samedi: WeeklySlot[];
+        dimanche: WeeklySlot[];
+    };
+}
+
+// Collection reference
+const weeklySlotsCollection = collection(firestore, 'weeklySlots');
+
+
 // Collection references
 const fieldsCollection = collection(firestore, 'fields');
 const slotsCollection = collection(firestore, 'slots');
@@ -228,6 +254,141 @@ export const getStats = async () => {
         return {
             totalFields: fieldsSnapshot.size,
             totalSlots: slotsSnapshot.size,
+            availableSlots: slotsSnapshot.docs.filter(doc => doc.data().available).length
+        };
+    } catch (error) {
+        console.error('Error getting stats:', error);
+        throw new Error('Impossible de charger les statistiques');
+    }
+};
+
+/**
+ * Import weekly slots from JSON data
+ */
+export const importWeeklySlots = async (weeklySlotsData: WeeklySlots[]): Promise<{ success: number; errors: string[] }> => {
+    if (!Array.isArray(weeklySlotsData)) {
+        throw new Error('Le fichier doit contenir un tableau de créneaux hebdomadaires');
+    }
+
+    let successCount = 0;
+    const errors: string[] = [];
+
+    for (const weeklySlot of weeklySlotsData) {
+        try {
+            // Validate required fields
+            if (!weeklySlot.fieldId || !weeklySlot.week || !weeklySlot.slots) {
+                errors.push(`Objet manquant fieldId, week ou slots`);
+                continue;
+            }
+
+            // Validate week format (should be YYYY-WNN)
+            const weekPattern = /^\d{4}-W\d{2}$/;
+            if (!weekPattern.test(weeklySlot.week)) {
+                errors.push(`Format de semaine invalide: "${weeklySlot.week}". Attendu: YYYY-WNN (ex: 2025-W19)`);
+                continue;
+            }
+
+            // Validate slots structure
+            const requiredDays = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
+            const missingDays = requiredDays.filter(day => !weeklySlot.slots[day]);
+            if (missingDays.length > 0) {
+                errors.push(`Jours manquants pour ${weeklySlot.fieldId}_${weeklySlot.week}: ${missingDays.join(', ')}`);
+                continue;
+            }
+
+            // Validate each day's slots
+            let isValidSlots = true;
+            for (const [dayName, daySlots] of Object.entries(weeklySlot.slots)) {
+                if (!Array.isArray(daySlots)) {
+                    errors.push(`Les créneaux du ${dayName} doivent être un tableau pour ${weeklySlot.fieldId}_${weeklySlot.week}`);
+                    isValidSlots = false;
+                    break;
+                }
+
+                for (const slot of daySlots) {
+                    if (!slot.time || typeof slot.available !== 'boolean' || typeof slot.price !== 'number') {
+                        errors.push(`Créneau invalide le ${dayName} pour ${weeklySlot.fieldId}_${weeklySlot.week}: manque time, available ou price`);
+                        isValidSlots = false;
+                        break;
+                    }
+                }
+
+                if (!isValidSlots) break;
+            }
+
+            if (!isValidSlots) continue;
+
+            // Create document data
+            const weeklySlotData = {
+                fieldId: weeklySlot.fieldId,
+                week: weeklySlot.week,
+                slots: weeklySlot.slots,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+
+            // Use custom ID: fieldId_week (ex: "1_2025-W19")
+            const documentId = `${weeklySlot.fieldId}_${weeklySlot.week}`;
+            await setDoc(doc(weeklySlotsCollection, documentId), weeklySlotData);
+
+            successCount++;
+
+        } catch (error) {
+            console.error('Error importing weekly slot:', weeklySlot, error);
+            errors.push(`Erreur pour ${weeklySlot.fieldId}_${weeklySlot.week}: ${error.message}`);
+        }
+    }
+
+    return { success: successCount, errors };
+};
+
+/**
+ * Fetch all weekly slots
+ */
+export const fetchWeeklySlots = async (): Promise<WeeklySlots[]> => {
+    try {
+        const snapshot = await getDocs(weeklySlotsCollection);
+        const weeklySlotsList = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        })) as (WeeklySlots & { id: string })[];
+        return weeklySlotsList;
+    } catch (error) {
+        console.error('Error fetching weekly slots:', error);
+        throw new Error('Impossible de charger les créneaux hebdomadaires');
+    }
+};
+
+/**
+ * Fetch weekly slots for a specific field
+ */
+export const fetchWeeklySlotsByField = async (fieldId: string): Promise<WeeklySlots[]> => {
+    try {
+        const q = query(weeklySlotsCollection, where('fieldId', '==', fieldId));
+        const snapshot = await getDocs(q);
+        const weeklySlotsList = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        })) as (WeeklySlots & { id: string })[];
+        return weeklySlotsList;
+    } catch (error) {
+        console.error('Error fetching weekly slots for field:', fieldId, error);
+        throw new Error('Impossible de charger les créneaux hebdomadaires du terrain');
+    }
+};
+
+export const getStatsWithWeeklySlots = async () => {
+    try {
+        const [fieldsSnapshot, slotsSnapshot, weeklySlotsSnapshot] = await Promise.all([
+            getDocs(fieldsCollection),
+            getDocs(slotsCollection),
+            getDocs(weeklySlotsCollection)
+        ]);
+
+        return {
+            totalFields: fieldsSnapshot.size,
+            totalSlots: slotsSnapshot.size,
+            totalWeeklySlots: weeklySlotsSnapshot.size,
             availableSlots: slotsSnapshot.docs.filter(doc => doc.data().available).length
         };
     } catch (error) {
