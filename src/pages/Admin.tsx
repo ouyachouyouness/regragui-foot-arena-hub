@@ -13,6 +13,7 @@ import {
 import ScheduleCalendar from '@/components/admin/ScheduleCalendar';
 import DevTools from '@/components/admin/DevTools';
 import FieldsManagement from '@/components/admin/FieldsManagement';
+import ReservationsManagement from "@/components/admin/ReservationsManagement.tsx";
 
 const Admin = () => {
     const [importStats, setImportStats] = useState({ fields: 0, slots: 0 });
@@ -129,6 +130,13 @@ const Admin = () => {
                             <Calendar className="w-4 h-4 mr-2" />
                             Créneaux
                         </TabsTrigger>
+                        <TabsTrigger
+                            value="reservations"
+                            className="data-[state=active]:bg-[#0033A1] data-[state=active]:text-white font-semibold text-sm py-2 px-4 rounded-md transition-all duration-300 whitespace-nowrap"
+                        >
+                            <Calendar className="w-4 h-4 mr-2" />
+                            Réservations
+                        </TabsTrigger>
                     </TabsList>
 
                     {/* Dev Tab */}
@@ -147,6 +155,11 @@ const Admin = () => {
                     {/* Schedule Tab */}
                     <TabsContent value="schedule" className="space-y-8">
                         <ScheduleCalendar />
+                    </TabsContent>
+
+                    {/* Reservation Tab */}
+                    <TabsContent value="reservations" className="space-y-8">
+                        <ReservationsManagement />
                     </TabsContent>
                 </Tabs>
             </PremiumCard>
