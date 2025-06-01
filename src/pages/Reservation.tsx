@@ -27,6 +27,7 @@ import {
   type Field,
   type TimeSlot
 } from '@/firebase/search.service';
+import HeroReservation from "@/components/HeroReservation.tsx";
 
 const Reservation = () => {
   const [searchParams] = useSearchParams();
@@ -151,85 +152,17 @@ const Reservation = () => {
 
   return (
       <div className="pt-16 min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-        {/* Hero Header */}
-        <section className="bg-gradient-to-r from-[#0033A1] via-[#001a5c] to-[#0033A1] text-white py-20 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="grid grid-cols-6 gap-8 transform rotate-12 scale-150">
-              {Array.from({length: 24}).map((_, i) => (
-                  <div key={i} className="text-6xl animate-pulse">⚽</div>
-              ))}
-            </div>
-          </div>
+        <HeroReservation
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
+            availableFieldTypes={availableFieldTypes}
+            isLoading={isLoading}
+            onSearch={handleSearch}
+            getFieldTypeLabel={getFieldTypeLabel}
+        />
 
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-12 animate-in fade-in duration-1000">
-              <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-                Réservation de terrains
-              </h1>
-              <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto font-medium">
-                Trouvez et réservez le terrain parfait pour votre match à Errachidia
-              </p>
-            </div>
-
-            {/* Barre de recherche */}
-            <PremiumCard className="p-8 max-w-6xl mx-auto bg-white/95 backdrop-blur-md animate-in slide-in-from-bottom duration-1000 delay-300">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-bold text-[#0033A1]">
-                    <Calendar className="w-4 h-4" />
-                    Date
-                  </label>
-                  <Input
-                      type="date"
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
-                      className="border-2 border-gray-200 focus:border-[#0033A1] rounded-xl h-12"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-bold text-[#0033A1]">
-                    <MapPin className="w-4 h-4" />
-                    Centre
-                  </label>
-                  <div className="h-12 px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-50 text-gray-600 font-medium flex items-center">
-                    Errachidia
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-bold text-[#0033A1]">
-                    <Users className="w-4 h-4" />
-                    Type de terrain
-                  </label>
-                  <Select value={selectedType} onValueChange={setSelectedType}>
-                    <SelectTrigger className="border-2 border-gray-200 focus:border-[#0033A1] rounded-xl h-12">
-                      <SelectValue placeholder="Tous les types" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Tous les types</SelectItem>
-                      {availableFieldTypes.map(type => (
-                          <SelectItem key={type} value={type}>
-                            {getFieldTypeLabel(type)}
-                          </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <GradientButton onClick={handleSearch} className="h-12" disabled={isLoading}>
-                  {isLoading ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                      <Search className="w-5 h-5" />
-                  )}
-                  Rechercher
-                </GradientButton>
-              </div>
-            </PremiumCard>
-          </div>
-        </section>
 
         {/* Section des résultats */}
         <section className="py-16">

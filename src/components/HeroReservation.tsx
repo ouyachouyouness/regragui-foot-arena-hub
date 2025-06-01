@@ -8,7 +8,8 @@ const HeroReservation = ({
                              setSelectedType,
                              availableFieldTypes,
                              isLoading,
-                             onSearch
+                             onSearch,
+                             getFieldTypeLabel
                          }) => {
     return (
         <section className="bg-gradient-to-r from-[#0033A1] via-[#001a5c] to-[#0033A1] text-white py-20 relative overflow-hidden">
@@ -38,6 +39,7 @@ const HeroReservation = ({
                     availableFieldTypes={availableFieldTypes}
                     isLoading={isLoading}
                     onSearch={onSearch}
+                    getFieldTypeLabel={getFieldTypeLabel}
                 />
             </div>
         </section>
