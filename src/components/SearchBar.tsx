@@ -36,12 +36,6 @@ const SearchBar = ({
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-12">
-                        <h1 className="text-5xl md:text-6xl font-black mb-6">Réservation de terrains</h1>
-                        <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-                            Trouvez et réservez le terrain parfait pour votre match à Errachidia
-                        </p>
-                    </div>
 
                     <div className="bg-white rounded-xl shadow-lg p-8 text-gray-800">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">

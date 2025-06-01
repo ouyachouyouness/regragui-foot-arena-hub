@@ -1,6 +1,6 @@
 // src/components/admin/ReservationsManagement.tsx
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { firestore } from '@/firebase/firebase';
 import { toast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface Reservation {
     id: string;
@@ -35,6 +36,8 @@ interface Reservation {
 
 const ReservationsManagement = () => {
     const [reservations, setReservations] = useState<Reservation[]>([]);
+    const [selectedForCancel, setSelectedForCancel] = useState<Reservation | null>(null);
+    const [selectedDetails, setSelectedDetails] = useState<Reservation | null>(null);
 
     useEffect(() => {
         const fetchReservations = async () => {
@@ -53,6 +56,17 @@ const ReservationsManagement = () => {
         };
         fetchReservations();
     }, []);
+
+    const handleStatusChange = async (id: string, newStatus: Reservation['status']) => {
+        try {
+            await updateDoc(doc(firestore, 'reservations', id), { status: newStatus });
+            setReservations(prev => prev.map(r => r.id === id ? { ...r, status: newStatus } : r));
+            toast({ title: 'Statut mis à jour', description: `Réservation ${id.slice(0,5)} -> ${newStatus}` });
+        } catch (err) {
+            console.error(err);
+            toast({ title: 'Erreur', description: "Échec de la mise à jour du statut.", variant: 'destructive' });
+        }
+    };
 
     const formatDate = (dateStr: string) =>
         new Date(dateStr).toLocaleDateString('fr-FR', {
@@ -110,10 +124,10 @@ const ReservationsManagement = () => {
                                 </td>
                                 <td className="p-3 text-center">
                                     <div className="inline-flex items-center gap-2">
-                                        <Button variant="outline" size="sm">
+                                        <Button variant="outline" size="sm" onClick={() => setSelectedDetails(res)}>
                                             <Eye className="w-4 h-4" />
                                         </Button>
-                                        <Select>
+                                        <Select value={res.status} onValueChange={(value) => value === 'annulée' ? setSelectedForCancel(res) : handleStatusChange(res.id, value as Reservation['status'])}>
                                             <SelectTrigger className="w-8 h-8 p-0 border border-gray-300">
                                                 <Settings className="w-4 h-4" />
                                             </SelectTrigger>
@@ -123,7 +137,7 @@ const ReservationsManagement = () => {
                                                 <SelectItem value="annulée">Annuler</SelectItem>
                                             </SelectContent>
                                         </Select>
-                                        <Button variant="outline" size="sm" className="text-red-600 border-red-300 hover:bg-red-50">
+                                        <Button variant="outline" size="sm" className="text-red-600 border-red-300 hover:bg-red-50" onClick={() => setSelectedForCancel(res)}>
                                             <XCircle className="w-4 h-4" />
                                         </Button>
                                     </div>
@@ -133,6 +147,43 @@ const ReservationsManagement = () => {
                         </tbody>
                     </table>
                 </div>
+            )}
+
+            {/* Détails */}
+            {selectedDetails && (
+                <Dialog open={!!selectedDetails} onOpenChange={() => setSelectedDetails(null)}>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Détails de la réservation</DialogTitle>
+                        </DialogHeader>
+                        <div className="text-sm space-y-2">
+                            <p><b>Terrain:</b> {selectedDetails.fieldName}</p>
+                            <p><b>Date:</b> {formatDate(selectedDetails.date)}</p>
+                            <p><b>Heure:</b> {selectedDetails.time}</p>
+                            <p><b>Prix:</b> {selectedDetails.price} DH</p>
+                            <p><b>Utilisateur:</b> {selectedDetails.userName} ({selectedDetails.userEmail})</p>
+                            {selectedDetails.notes && <p><b>Notes:</b> {selectedDetails.notes}</p>}
+                            <p><b>Status:</b> {selectedDetails.status}</p>
+                            <p><b>Créé le:</b> {new Date(selectedDetails.createdAt).toLocaleString('fr-FR')}</p>
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            )}
+
+            {/* Confirmation annulation */}
+            {selectedForCancel && (
+                <Dialog open={!!selectedForCancel} onOpenChange={() => setSelectedForCancel(null)}>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Annuler la réservation ?</DialogTitle>
+                        </DialogHeader>
+                        <p className="text-sm text-gray-600">Cette action est <b>irréversible</b>. Voulez-vous vraiment annuler la réservation de {selectedForCancel.userName} pour le {formatDate(selectedForCancel.date)} à {selectedForCancel.time} ?</p>
+                        <div className="flex justify-end gap-3 pt-4">
+                            <Button variant="outline" onClick={() => setSelectedForCancel(null)}>Annuler</Button>
+                            <Button variant="destructive" onClick={() => { handleStatusChange(selectedForCancel.id, 'annulée'); setSelectedForCancel(null); }}>Confirmer</Button>
+                        </div>
+                    </DialogContent>
+                </Dialog>
             )}
         </div>
     );
